@@ -15,7 +15,7 @@ else
 fi
 
 DiskL=$(df | grep /sd | awk '{print $1}')
-DiskU=$(df | grep /sd | awk '{print $5}')
+DiskU=$(df | grep /sd | awk '{print $5}' | tr -d "%")
 NbThread=$(ps -eo nlwp | tail -n +2 | awk '{count+=$1} END {print count}')
 
 NBCORE=$(cat /proc/cpuinfo | grep "cpu cores" | tr -d '[:space:]' | cut -d ":" -f 2)
