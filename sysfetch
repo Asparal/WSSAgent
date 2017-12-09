@@ -51,43 +51,43 @@ echo "ramu$"
 echo "$RAMU"
 echo "$"
 
-echo "diskl"
+echo "diskl$"
 echo "$DiskL"
 echo "$"
 
-echo "disku"
+echo "disku$"
 echo "$DiskU"
 echo "$"
 
-echo "nbthread"
+echo "nbthread$"
 echo "$NbThread"
 echo "$"
 
-echo "nbcore"
+echo "nbcore$"
 echo "$NBCORE"
 echo "$"
 
-echo "cpuloadl"
+echo "cpuloadl$"
 echo "$CPULOADL"
 echo "$"
 
-echo "cpuloadll"
+echo "cpuloadll$"
 echo "$CPULOADLL"
 echo "$"
 
-echo "cpuloadlll"
+echo "cpuloadlll$"
 echo "$CPULOADLLL"
 echo "$"
 
-echo "cpupercu"
+echo "cpupercu$"
 echo "$CPUPERCU"
 echo "$"
 
-echo "cpupercs"
+echo "cpupercs$"
 echo "$CPUPERCS"
 echo "$"
 
-echo "cpuperci"
+echo "cpuperci$"
 echo "$CPUPERCI"
 
 echo "#"
