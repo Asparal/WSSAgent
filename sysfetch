@@ -1,0 +1,93 @@
+#!/bin/sh
+
+SID=$(head -1 /var/SlaveID)
+HOSTNAME=$(hostname)
+OS=$(lsb_release -a 2>/dev/null | grep Distributor | tr -d '[:space:]' | cut -d ":" -f 2)
+UPTIME=$(uptime -s)
+
+RAMT=$(free --mega | grep Mem | awk '{print $2}')
+
+if [ $OS = "Ubuntu" ]
+then
+	RAMU=$(free | grep Mem | awk '{print ($3/$2) * 100.0}')
+else
+	RAMU=$(free | grep Mem | awk '{print ($3-$6-$7)/$2 * 100.0}')
+fi
+
+DiskL=$(df | grep /sd | awk '{print $1}')
+DiskU=$(df | grep /sd | awk '{print $5}')
+NbThread=$(ps -eo nlwp | tail -n +2 | awk '{count+=$1} END {print count}')
+
+NBCORE=$(cat /proc/cpuinfo | grep "cpu cores" | tr -d '[:space:]' | cut -d ":" -f 2)
+CPULOADL=$(cat /proc/loadavg | awk '{print $1}')
+CPULOADLL=$(cat /proc/loadavg | awk '{print $2}')
+CPULOADLLL=$(cat /proc/loadavg | awk '{print $3}')
+CPUPERCU=$(top -bn 1 | grep "Cpu(s)" | awk '{print $2}')
+CPUPERCS=$(top -bn 1 | grep "Cpu(s)" | awk '{print $4}')
+CPUPERCI=$(top -bn 1 | grep "Cpu(s)" | awk '{print $8}')
+
+echo "#"
+
+echo "$SID"
+echo "$"
+
+echo "hostname$"
+echo "$HOSTNAME"
+echo "$"
+
+echo "os$"
+echo "$OS"
+echo "$"
+
+echo "uptime$"
+echo "$UPTIME"
+echo "$"
+
+echo "ramt$"
+echo "$RAMT"
+echo "$"
+
+echo "ramu$"
+echo "$RAMU"
+echo "$"
+
+echo "diskl"
+echo "$DiskL"
+echo "$"
+
+echo "disku"
+echo "$DiskU"
+echo "$"
+
+echo "nbthread"
+echo "$NbThread"
+echo "$"
+
+echo "nbcore"
+echo "$NBCORE"
+echo "$"
+
+echo "cpuloadl"
+echo "$CPULOADL"
+echo "$"
+
+echo "cpuloadll"
+echo "$CPULOADLL"
+echo "$"
+
+echo "cpuloadlll"
+echo "$CPULOADLLL"
+echo "$"
+
+echo "cpupercu"
+echo "$CPUPERCU"
+echo "$"
+
+echo "cpupercs"
+echo "$CPUPERCS"
+echo "$"
+
+echo "cpuperci"
+echo "$CPUPERCI"
+
+echo "#"
