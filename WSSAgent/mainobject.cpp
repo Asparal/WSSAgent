@@ -3,14 +3,18 @@
 mainobject::mainobject(QObject *parent) : QObject(parent)
 {
     master = "";
-    data = new DataFetcher();
     udpt = new socketUDP();
     tcpt = new socketTCP();
 
     connect(udpt, SIGNAL(serverfound(QString)), this, SLOT(set_master(QString)));
+    connect(udpt, SIGNAL(firstatt(QString)), this, SLOT(reloaded(QString)));
     connect(tcpt, SIGNAL(newrequest(QTcpSocket*)), this, SLOT(perform_slave(QTcpSocket*)));
     connect(tcpt, SIGNAL(newslave(QString)), this, SLOT(set_slave(QString)));
-    connect(data, SIGNAL(fetcherror()), this, SLOT(error()));
+}
+
+mainobject::~mainobject()
+{
+    (new QUdpSocket())->writeDatagram(crypt::enc("#" + this->slave().toLatin1() + "$Disconnected"), QHostAddress(master), 4442);
 }
 
 void mainobject::set_master(QString m)
@@ -19,7 +23,9 @@ void mainobject::set_master(QString m)
     {
         qDebug() << "New master : " << m;
         master = m;
-        QByteArray tosend(crypt::enc("#x$newmaster#"));
+        QByteArray tosend;
+        if(this->slave() != "absent") tosend = crypt::enc("#" + this->slave().toLatin1() +"$newmaster#");
+        else tosend = crypt::enc("#x$newmaster#");
         (new QUdpSocket())->writeDatagram(tosend, QHostAddress(m), (quint16)4442);
     }
 }
@@ -37,9 +43,35 @@ void mainobject::perform_slave(QTcpSocket* sock)
 void mainobject::set_slave(QString s)
 {
     slaveid = s;
+    system("echo " + slaveid.toLatin1() + " > /var/SlaveID");
+    data = new DataFetcher();
+    connect(data, SIGNAL(fetcherror()), this, SLOT(error()));
 }
 
 void mainobject::error()
 {
     qDebug() << "Probleme avec le script local";
+}
+
+QString mainobject::slave()
+{
+    QString d;
+    if(QFileInfo::exists("/var/SlaveID"))
+    {
+        QFile f("/var/SlaveID");
+        if(f.open(QIODevice::ReadOnly))
+        {
+            d = f.readLine();
+            f.close();
+            return d;
+        }
+        else return "absent";
+    }
+    else return "absent";
+}
+
+void mainobject::reloaded(QString s)
+{
+    master = "";
+    this->set_master(s);
 }

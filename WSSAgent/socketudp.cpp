@@ -27,10 +27,8 @@ void socketUDP::udpreceive()
             QStringList list = data.split("$");
             if(list.at(0) == "444")
             {
-                if(list.at(1) == "Beacon")
-                {
-                    emit serverfound(sender.toString());
-                }
+                if(list.at(1) == "Beacon") emit serverfound(sender.toString());
+                else if(list.at(1) == "Firstatt") emit firstatt(sender.toString());
                 else qDebug() << "Erreur - Data chelou : " << data;
             }
             else qDebug() << "Erreur - Sender chelou : " << data;

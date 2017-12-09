@@ -13,6 +13,7 @@ public:
 
 signals:
     void serverfound(QString server);
+    void firstatt(QString server);
 
 private:
     QUdpSocket* udpsocket;
