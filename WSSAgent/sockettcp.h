@@ -1,6 +1,7 @@
 #ifndef SOCKETTCP_H
 #define SOCKETTCP_H
 
+#include <QStringList>
 #include <QObject>
 #include <QTcpServer>
 #include "crypt.h"

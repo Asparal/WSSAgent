@@ -1,6 +1,7 @@
 #ifndef SOCKETUDP_H
 #define SOCKETUDP_H
 
+#include <QStringList>
 #include <QObject>
 #include <QUdpSocket>
 #include "crypt.h"

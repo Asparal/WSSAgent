@@ -56,7 +56,7 @@ void mainobject::error()
 QString mainobject::slave()
 {
     QString d;
-    if(QFileInfo::exists("/var/SlaveID"))
+    if(QFileInfo("/var/SlaveID").exists())
     {
         QFile f("/var/SlaveID");
         if(f.open(QIODevice::ReadOnly))
