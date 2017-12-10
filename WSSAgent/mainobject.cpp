@@ -14,7 +14,7 @@ mainobject::mainobject(QObject *parent) : QObject(parent)
 
 mainobject::~mainobject()
 {
-    (new QUdpSocket())->writeDatagram(crypt::enc("#" + this->slave().toLatin1() + "$Disconnected"), QHostAddress(master), 4442);
+    (new QUdpSocket())->writeDatagram(crypt::enc("#" + this->slave().toLatin1() + "$Disconnected#"), QHostAddress(master), 4442);
 }
 
 void mainobject::set_master(QString m)
