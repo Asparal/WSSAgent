@@ -18,7 +18,7 @@ DiskL=$(df | grep /sd | awk '{print $1}')
 DiskU=$(df | grep /sd | awk '{print $5}' | tr -d "%")
 NbThread=$(ps -eo nlwp | tail -n +2 | awk '{count+=$1} END {print count}')
 
-NBCORE=$(cat /proc/cpuinfo | grep "cpu cores" | tr -d '[:space:]' | cut -d ":" -f 2)
+NBCORE=$(cat /proc/cpuinfo | grep "cpu cores" | head -n1 | tr -d '[:space:]' | cut -d ":" -f 2)
 CPULOADL=$(cat /proc/loadavg | awk '{print $1}')
 CPULOADLL=$(cat /proc/loadavg | awk '{print $2}')
 CPULOADLLL=$(cat /proc/loadavg | awk '{print $3}')
