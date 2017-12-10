@@ -7,7 +7,7 @@ UPTIME=$(uptime -s)
 
 RAMT=$(free --mega | grep Mem | awk '{print $2}')
 
-if [[ $OS = "Ubuntu" ] || [ $OS = "Kali" ]]
+if [ $OS = "Ubuntu" ] || [ $OS = "Kali" ]
 then
 	RAMU=$(free | grep Mem | awk '{print ($3/$2) * 100.0}')
 else
