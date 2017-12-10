@@ -1,4 +1,5 @@
 #include "datafetcher.h"
+#include <QDebug>
 
 DataFetcher::DataFetcher(QObject *parent) : QObject(parent)
 {
@@ -23,6 +24,7 @@ void DataFetcher::fetch_it()
     else { emit fetcherror(); return; }
     if(!(data.at(0) == '#' && data.at(data.length()-1) == '#' && data.contains("$"))) { emit fetcherror(); return; }
     actualdata = data;
+    qDebug() << actualdata;
 }
 
 QString DataFetcher::ret_all()

@@ -34,7 +34,8 @@ void mainobject::perform_slave(QTcpSocket* sock)
 {
     if(master == sock->peerAddress().toString())
     {
-        QString rep = crypt::enc(data->ret_all().toLatin1());
+        QString rep = QString(crypt::enc(data->ret_all().toLatin1()));
+	qDebug() << "Rep : " << rep;
         tcpt->sendtext(sock, rep);
     }
     else qDebug() << "Request from unknown not performed - " << sock->peerAddress().toString();
